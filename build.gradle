@@ -1,0 +1,75 @@
+group 'org.wso2'
+
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'docker'
+apply plugin: 'findbugs'
+
+buildscript {
+    repositories { jcenter() }
+    dependencies {
+        classpath 'se.transmode.gradle:gradle-docker:1.2'
+    }
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        url 'https://mavenstg.wso2.org/nexus/content/repositories/public/'
+    }
+//    mavenLocal()
+}
+
+
+dependencies {
+    compile 'org.wso2.microservices:microservice-chassis:3.0'
+    compile 'org.ehcache:jcache:1.0.0'
+}
+
+mainClassName = 'org.wso2.weather.WeatherService'
+
+//task customFindbugs(type: FindBugs) {
+//    description = "Uses to test the static vulnerable code changes in latest commits"
+//    ignoreFailures = true
+//    effort = "default"
+//    reportLevel = "medium"
+//    classes = files("$project.buildDir/intermediates/classes")
+//    excludeFilter = file("$rootProject.projectDir/exclude.xml")
+//
+//    source = fileTree('src/main/java/')
+//    classpath = files()
+//    reports {
+//        xml.enabled = false
+//        xml.withMessages = true
+//        html.enabled = !xml.isEnabled()
+//        xml.destination "$project.buildDir/outputs/findbugs/findbugs-output.xml"
+//        html.destination "$project.buildDir/outputs/findbugs/findbugs-output.html"
+//    }
+//}
+
+task dockerImage(type: Docker) {
+    group = 'docker'
+    description = "Uses to create the Docker images include build artifacts and push built image to docker registry."
+
+    inputs.files project.distTar
+
+    push = Boolean.getBoolean('docker.push')
+
+    doFirst {
+        def buildNumber = System.getenv('BUILD_NUMBER')
+        baseImage = 'hacktheworld/microservice-base'
+        tagVersion = buildNumber ? "${project.version}.${buildNumber}" : project.version
+        registry = 'rasanjaya85'
+        applicationName = project.applicationName
+        addFile project.distTar.outputs.files.singleFile
+        exposePort 8000
+
+        def installDir = "/" + project.distTar.archiveName - ".${project.distTar.extension}"
+        entryPoint = ["$installDir/bin/${project.applicationName}"]
+    }
+}
+
+dockerImage.dependsOn 'assemble'
+
+
+
