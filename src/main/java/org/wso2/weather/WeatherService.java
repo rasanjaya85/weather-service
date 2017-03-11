@@ -47,18 +47,18 @@ public class WeatherService extends Microservice{
         };
     }
 
-//    private Connection getConnection() throws SQLException {
-//
-//        Connection connection;
-//        try {
-//            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-//        } catch (final ClassNotFoundException e) {
-//            System.out.println("   - ERROR:" + e.getMessage());
-//        }
-//        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
-//        return connection;
-//    }
-//
+    private Connection getConnection() throws SQLException {
+
+        Connection connection;
+        try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        } catch (final ClassNotFoundException e) {
+            System.out.println("   - ERROR:" + e.getMessage());
+        }
+        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
+        return connection;
+    }
+
 //    private String getAnswersByOwner(final String owner) {
 //
 //        Statement statement = null;
