@@ -34,6 +34,56 @@ public class WeatherService extends Microservice{
 //    }
 
 
+    @Inject
+        private Config config;
+
+    private Connection getConnection() throws SQLException {
+
+        Connection connection;
+        try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        } catch (final ClassNotFoundException e) {
+            System.out.println("   - ERROR:" + e.getMessage());
+        }
+//        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
+        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP",config.getString("database.password"));
+        return connection;
+    }
+
+    private String getAnswersByOwner(final String owner) {
+
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            final String query = "SELECT answer FROM T_ADVICE WHERE owner= '" + owner + "'";
+            statement = getConnection().createStatement();
+            resultSet = statement.executeQuery(query);
+            if (resultSet.next()) {
+                return resultSet.getString("answer");
+            }
+        } catch (final SQLException e) {
+            System.out.println("   - ERROR:" + e.getMessage());
+        } finally {
+
+            if (null != resultSet) {
+                try {
+                    resultSet.close();
+                } catch (final SQLException e) {
+                }
+            }
+            if (null != statement) {
+                try {
+                    statement.close();
+                } catch (final SQLException e) {
+                }
+            }
+        }
+
+        return null;
+    }
+
+
+
     @Override
     public Module[] getModules() {
         return new Module[] {
@@ -46,50 +96,6 @@ public class WeatherService extends Microservice{
                 }
         };
     }
-
-//    private Connection getConnection() throws SQLException {
-//
-//        Connection connection;
-//        try {
-//            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-//        } catch (final ClassNotFoundException e) {
-//            System.out.println("   - ERROR:" + e.getMessage());
-//        }
-//        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
-//        return connection;
-//    }
-
-//    private String getAnswersByOwner(final String owner) {
-//
-//        Statement statement = null;
-//        ResultSet resultSet = null;
-//        try {
-//            final String query = "SELECT answer FROM T_ADVICE WHERE owner= '" + owner + "'";
-//            statement = getConnection().createStatement();
-//            resultSet = statement.executeQuery(query);
-//            if (resultSet.next()) {
-//                return resultSet.getString("answer");
-//            }
-//        } catch (final SQLException e) {
-//            System.out.println("   - ERROR:" + e.getMessage());
-//        } finally {
-//
-//            if (null != resultSet) {
-//                try {
-//                    resultSet.close();
-//                } catch (final SQLException e) {
-//                }
-//            }
-//            if (null != statement) {
-//                try {
-//                    statement.close();
-//                } catch (final SQLException e) {
-//                }
-//            }
-//        }
-//
-//        return null;
-//    }
 
     @Path("/")
     public static class ConfigTest {
