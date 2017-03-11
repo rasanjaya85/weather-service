@@ -59,7 +59,7 @@ task dockerImage(type: Docker) {
         def buildNumber = System.getenv('BUILD_NUMBER')
         baseImage = 'rasanjaya85/microservice-base'
         tagVersion = buildNumber ? "${project.version}.${buildNumber}" : project.version
-        registry = 'registry.example.org:5000'
+        registry = 'registry.cloudstaging.wso2.com:5000'
         applicationName = project.applicationName
         addFile project.distTar.outputs.files.singleFile
         exposePort 8080
