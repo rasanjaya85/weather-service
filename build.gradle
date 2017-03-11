@@ -50,9 +50,7 @@ task customFindbugs(type: FindBugs) {
 task dockerImage(type: Docker) {
     group = 'docker'
     description = "Uses to create the Docker images include build artifacts and push built image to docker registry."
-
     inputs.files project.distTar
-
     push = Boolean.getBoolean('docker.push')
 
     doFirst {
