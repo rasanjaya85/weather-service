@@ -54,8 +54,8 @@ task dockerImage(type: Docker) {
     push = Boolean.getBoolean('docker.push')
 
     doFirst {
-//        def buildNumber = System.getenv('BUILD_NUMBER')
-        def buildNumber = '3'
+        def buildNumber = System.getenv('BUILD_NUMBER')
+//        def buildNumber = '3'
         baseImage = 'rasanjaya85/microservice-base'
         tagVersion = buildNumber ? "${project.version}.${buildNumber}" : project.version
         registry = 'registry.cloudstaging.wso2.com:5000'
