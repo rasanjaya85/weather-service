@@ -54,7 +54,8 @@ task dockerImage(type: Docker) {
     push = Boolean.getBoolean('docker.push')
 
     doFirst {
-        def buildNumber = System.getenv('BUILD_NUMBER')
+//        def buildNumber = System.getenv('BUILD_NUMBER')
+        def buildNumber = '3'
         baseImage = 'rasanjaya85/microservice-base'
         tagVersion = buildNumber ? "${project.version}.${buildNumber}" : project.version
         registry = 'registry.cloudstaging.wso2.com:5000'
@@ -67,7 +68,17 @@ task dockerImage(type: Docker) {
     }
 }
 
-dockerImage.dependsOn 'assemble'
+//task hello(type: Exec) {
+//    workingDir "$projectDir/"
+////    commandLine 'sh', '-c', "echo 'Starting running container and run dynamic test.'"
+//    commandLine 'sh', '-c', "docker run -p 8080:8080 registry.cloudstaging.wso2.com:5000/weather-service:1.0"
+////    commandLine 'sh', '-c', '/bin/bash response.sh'
+//}
+//
+
+dockerImage.dependsOn(build)
+//dockerImage.dependsOn 'assemble'
+
 
 
 
