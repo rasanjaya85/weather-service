@@ -37,18 +37,18 @@ public class WeatherService extends Microservice{
     @Inject
         private Config config;
 
-//    private Connection getConnection() throws SQLException {
-//
-//        Connection connection;
-//        try {
-//            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
-//        } catch (final ClassNotFoundException e) {
-//            System.out.println("- ERROR:" + e.getMessage());
-//        }
-//        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
-////        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP",config.getString("database.password"));
-//        return connection;
-//    }
+    private Connection getConnection() throws SQLException {
+
+        Connection connection;
+        try {
+            Class.forName("org.apache.derby.jdbc.EmbeddedDriver");
+        } catch (final ClassNotFoundException e) {
+            System.out.println("- ERROR:" + e.getMessage());
+        }
+        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
+//        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP",config.getString("database.password"));
+        return connection;
+    }
 
 //    private String getAnswersByOwner(final String owner) {
 //
