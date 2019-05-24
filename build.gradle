@@ -24,6 +24,19 @@ repositories {
 dependencies {
     compile 'org.wso2.microservices:microservice-chassis:3.0'
     compile 'org.ehcache:jcache:1.0.0'
+    compile 'com.google.inject.extensions:guice-servlet:4.1.0'
+
+    compile 'javax.ws.rs:javax.ws.rs-api:2.0.1'
+    compile 'javax.servlet:javax.servlet-api:3.1.0'
+
+    compile 'org.jboss.resteasy:resteasy-client:3.1.0.Final'
+    compile 'org.jboss.resteasy:resteasy-jaxrs:3.1.0.Final'
+    compile 'org.jboss.resteasy:resteasy-guice:3.1.0.Final'
+    compile 'org.jboss.resteasy:resteasy-jackson2-provider:3.1.0.Final'
+    compile 'org.eclipse.jetty:jetty-servlet:9.4.0.v20161208'
+    compile 'com.typesafe:config:1.3.1'
+
+    compile 'com.orbitz.consul:consul-client:0.9.7'
 }
 
 mainClassName = 'org.wso2.weather.WeatherService'
