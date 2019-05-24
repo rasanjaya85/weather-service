@@ -15,7 +15,7 @@ buildscript {
 repositories {
     mavenCentral()
     maven {
-        url 'https://mavenstg.wso2.org/nexus/content/repositories/public/'
+        url 'http://192.168.33.20:8081/repository/maven-releases/'
     }
 //    mavenLocal()
 }
