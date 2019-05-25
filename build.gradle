@@ -68,7 +68,6 @@ task dockerImage(type: Docker) {
 
     doFirst {
         def buildNumber = System.getenv('BUILD_NUMBER')
-//        def buildNumber = '3'
         baseImage = 'rasanjaya85/microservice-base'
         tagVersion = buildNumber ? "${project.version}.${buildNumber}" : project.version
         registry = 'registry.wso2.org'
