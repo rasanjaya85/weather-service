@@ -3,7 +3,7 @@ group 'org.wso2'
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'docker'
-apply plugin: 'findbugs'
+// apply plugin: 'findbugs'
 
 buildscript {
     repositories { jcenter() }
@@ -79,8 +79,8 @@ task dockerImage(type: Docker) {
         entryPoint = ["$installDir/bin/${project.applicationName}"]
     }
 }
-
-//task hello(type: Exec) {
+dockerImage
+//task hello(type: exec) {
 //    workingDir "$projectDir/"
 ////    commandLine 'sh', '-c', "echo 'Starting running container and run dynamic test.'"
 //    commandLine 'sh', '-c', "docker run -p 8080:8080 registry.cloudstaging.wso2.com:5000/weather-service:1.0"
