@@ -3,7 +3,7 @@ group 'org.wso2'
 apply plugin: 'java'
 apply plugin: 'application'
 apply plugin: 'docker'
-// apply plugin: 'findbugs'
+apply plugin: 'findbugs'
 
 buildscript {
     repositories { jcenter() }
@@ -35,30 +35,29 @@ dependencies {
     compile 'org.jboss.resteasy:resteasy-jackson2-provider:3.1.0.Final'
     compile 'org.eclipse.jetty:jetty-servlet:9.4.0.v20161208'
     compile 'com.typesafe:config:1.3.1'
-
     compile 'com.orbitz.consul:consul-client:0.9.7'
 }
 
 mainClassName = 'org.wso2.weather.WeatherService'
 
-//task customFindbugs(type: FindBugs) {
-//    description = "Uses to test the static vulnerable code changes in latest commits"
-//    ignoreFailures = true
-//    effort = "default"
-//    reportLevel = "medium"
-//    classes = files("$project.buildDir/intermediates/classes")
-//    excludeFilter = file("$rootProject.projectDir/exclude.xml")
-//
-//    source = fileTree('src/main/java/')
-//    classpath = files()
-//    reports {
-//        xml.enabled = false
-//        xml.withMessages = true
-//        html.enabled = !xml.isEnabled()
-//        xml.destination "$project.buildDir/outputs/findbugs/findbugs-output.xml"
-//        html.destination "$project.buildDir/outputs/findbugs/findbugs-output.html"
-//    }
-//}
+task customFindbugs(type: FindBugs) {
+    description = "Uses to test the static vulnerable code changes in latest commits"
+    ignoreFailures = true
+    effort = "default"
+    reportLevel = "medium"
+    classes = files("$project.buildDir/intermediates/classes")
+    excludeFilter = file("$rootProject.projectDir/exclude.xml")
+
+    source = fileTree('src/main/java/')
+    classpath = files()
+    reports {
+        xml.enabled = false
+        xml.withMessages = true
+        html.enabled = !xml.isEnabled()
+        xml.destination "$project.buildDir/outputs/findbugs/findbugs-output.xml"
+        html.destination "$project.buildDir/outputs/findbugs/findbugs-output.html"
+    }
+}
 
 task dockerImage(type: Docker) {
     group = 'docker'
