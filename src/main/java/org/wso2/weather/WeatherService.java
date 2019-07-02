@@ -45,8 +45,8 @@ public class WeatherService extends Microservice{
         } catch (final ClassNotFoundException e) {
             System.out.println("- ERROR:" + e.getMessage());
         }
-//        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
-        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP",config.getString("database.password"));
+        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP", "my-secret-password");
+//        connection = DriverManager.getConnection("jdbc:derby:memory:myDB;create=true", "APP",config.getString("database.password"));
         return connection;
     }
 
