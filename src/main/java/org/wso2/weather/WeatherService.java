@@ -106,7 +106,7 @@ public class WeatherService extends Microservice{
         @GET
         @Produces("application/json")
         public Map<String, String>  getResources() {
-             return ImmutableMap.of("weather.name",config.getString("weather.config"),"microservice-name",config.getString("microservice.name"));
+             return ImmutableMap.of("weather-location",config.getString("weather.location"),"microservice-name",config.getString("microservice.name"));
         }
     }
 
